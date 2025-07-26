@@ -5,9 +5,7 @@ import random, math
 import threading
 from threading import Thread
 
-
 lock = threading.Lock()
-
 ancho, altura = 600, 600
 FPS = 60
 DURACION = 10 
@@ -48,7 +46,6 @@ def expandir_con_padding(matriz, mascara):
     nueva_mascara[y_ini:y_ini+altura, x_ini:x_ini+ancho] = mascara
 
     return nueva_matriz, nueva_mascara
-
 
 #Clase para la estrella Principal
 class EstrellaRotante:
@@ -146,8 +143,6 @@ class Estrella:
             self.dibujar_punto(frame)
         elif self.tipo == "cruz":
             self.dibujar_cruz(frame)
-        else:
-            self.dibujar_trazo(frame)
     
     def dibujar_punto(self, frame):
         radio = int(self.tamano)
@@ -167,9 +162,8 @@ class Estrella:
                 if 0 <= px < self.ancho and 0 <= py < self.alto:
                     frame[py, px] = self.mezclar_pixeles(frame[py, px], self.color, self.transparencia)
 
-    @staticmethod
-    def mezclar_pixeles(pixel_fondo, pixel_estrella, alpha):
-        return (pixel_fondo * (1 - alpha) + pixel_estrella * alpha).astype(np.uint8)
+    def mezclar_pixeles(pixel_fondo, pixel_estrella, transparencia):
+        return (pixel_fondo * (1 - transparencia) + pixel_estrella * transparencia).astype(np.uint8)
 def main():
     #Cargar fondo y objeto (esto sigue igual)
     fondo = cargar_fondo()
